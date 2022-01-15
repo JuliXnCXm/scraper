@@ -1,0 +1,10 @@
+delivery_sites:
+  ifood:
+    url_bog_rest: 'https://www.ifood.com.co/delivery/bogota-bog/'
+    homepage: 'https://www.ifood.com.co'
+    queries:
+      restaurant_card: '.merchant-list-v2__item-wrapper'
+      restaurant_name: '.merchant-v2__header span '
+      restaurant_info: '.merchant-v2__info'
+      restaurant_delivery_time: '.merchant-v2__footer'
+      restaurant_delivery_cost: '.merchant-v2__footer span'
