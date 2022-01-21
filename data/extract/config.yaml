@@ -8,3 +8,12 @@ delivery_sites:
       restaurant_info: '.merchant-v2__info'
       restaurant_delivery_time: '.merchant-v2__footer'
       restaurant_delivery_cost: '.merchant-v2__footer span'
+  data:
+    data1.json: '../../backend/data/data1.json'
+    data2.json: '../../backend/data/data2.json'
+    data3.json: '../../backend/data/data3.json'
+    data4.json: '../../backend/data/data4.json'
+    data5.json: '../../backend/data/data5.json'
+    data6.json: '../../backend/data/data6.json'
+    data7.json: '../../backend/data/data7.json'
+

@@ -22,10 +22,10 @@ other = re.compile(r'^https?://.+$')
 is_root_path = re.compile(r'^/.+$')
 
 
-def delivery_scraper(delivery_sites_uid):
-    host= config()['delivery_sites'][delivery_sites_uid]['url_bog_rest']
+def delivery_scraper(delivery_sites_uid, idx):
+    host= config()['delivery_sites']['ifood']['url_bog_rest']
     logging.info('Beginning scraper for {}'.format(host))
-    restaurant_page = deliverys.RestaurantPage(delivery_sites_uid)
+    restaurant_page = deliverys.RestaurantPage(delivery_sites_uid, idx)
     restaurants = []
     restaurant_info = []
     for info in restaurant_page.restaurant_info:
@@ -37,10 +37,10 @@ def delivery_scraper(delivery_sites_uid):
             restaurant_info.append(info[0])
         else:
             logging.info('Restaurant {} not available'.format(link))
-    _save_restaurant(restaurants, restaurant_info ,delivery_sites_uid)
+    _save_restaurant(restaurants, restaurant_info ,delivery_sites_uid, idx)
 
 
-def _save_restaurant(restaurants, restaurant_info, delivery_sites_uid):
+def _save_restaurant(restaurants, restaurant_info, delivery_sites_uid, idx):
 
     objRestaurant = {
         'dish_name': [],
@@ -85,7 +85,7 @@ def _save_restaurant(restaurants, restaurant_info, delivery_sites_uid):
 
     df_restaurant = pd.DataFrame(objRestaurant)
 
-    df_restaurant.to_csv('{}_'.format(delivery_sites_uid), sep=',', index=False , encoding='utf-8')
+    df_restaurant.to_csv('{}{}_'.format(delivery_sites_uid,idx), sep=',', index=False , encoding='utf-8')
 
 def _fetch_restaurant(homepage_url , link):
     logging.info('Beginning fetching restaurant {}'.format(link))
@@ -118,6 +118,8 @@ def _builder_link(link, host):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     delivery_sites_choices = list(config()['delivery_sites'].keys())
+    index_choices = [str(x) for x in range(8)]
     parser.add_argument('delivery_site', help='The delivery site uid, must be one of: {}'.format(delivery_sites_choices), type=str, choices=delivery_sites_choices)
+    parser.add_argument('index', help='index of file: data.json', type=str, choices=index_choices)
     args = parser.parse_args()
-    delivery_scraper(args.delivery_site)
+    delivery_scraper(args.delivery_site , args.index)
